@@ -3,7 +3,7 @@ let scoreElement = document.getElementById('score');
 let timeElement = document.getElementById('time');
 
 let score = 0;
-let timeLeft = 25; // 30 seconds timer
+let timeLeft = 25; // 25 seconds timer
 let speed = 987; // initial speed of doggo movement
 
 function moveDog() {
@@ -23,3 +23,26 @@ function updateScore() {
     score++;
     scoreElement.textContent = score;
 }
+
+function startGame() {
+    dog.addEventListener('click', () => {
+        updateScore();
+        increaseSpeed();
+    });
+
+    let gameInterval = setInterval(() => {
+        moveDog();
+    }, speed);
+
+    let countdown = setInterval(() => {
+        timeLeft--;
+        timeElement.textContent = timeLeft;
+        if (timeLeft === 0) {
+            clearInterval(gameInterval);
+            clearInterval(countdown);
+            alert('Game Over! Your score is ' + score);
+        }
+    }, 1000);
+}
+
+startGame();
